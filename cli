@@ -1,5 +1,6 @@
 ./simpleservice.py 192.168.10.33 --multicast 224.0.23.170 --port 6369
 
+# receiver.py remote IP, port, service id, method (1 or 2), version 
 ./get.py 192.168.10.33 6369 4660 22136 1
 
 netstat -anu|sort -nk4 # to get the list of multicast addresses 
