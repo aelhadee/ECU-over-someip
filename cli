@@ -1,4 +1,5 @@
 # pip install someip
+# ./simpleservice.py local IP, multicast address, port
 ./simpleservice.py 192.168.10.33 --multicast 224.0.23.170 --port 6369
 
 # receiver.py remote IP, port, service id, method (1 or 2), version 
