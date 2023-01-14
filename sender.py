@@ -6,6 +6,8 @@ import logging
 import typing
 import socket
 import os 
+import string 
+import random
 
 from someip.header import (
     _T_SOCKNAME,
@@ -15,7 +17,9 @@ from someip.sd import ServiceDiscoveryProtocol
 from someip.service import SimpleEventgroup, SimpleService, MalformedMessageError
 
 LOG = logging.getLogger("simpleservice")
-
+population = string.ascii_letters + string.digits
+population *= (8500 // len(population)) + 1
+counter =0
 
 class TimeEvgrp(SimpleEventgroup):
     def __init__(self, service: Prot):
@@ -27,7 +31,7 @@ class TimeEvgrp(SimpleEventgroup):
     async def update(self):
         while True:
             self.values[0x0001] = self.service.get_time()
-            await asyncio.sleep(0.1)
+            await asyncio.sleep(1 / 1000)
 
 
 class Prot(SimpleService):
@@ -42,8 +46,11 @@ class Prot(SimpleService):
         self.register_method(2, self.method_set_time)
         self.register_eventgroup(TimeEvgrp(self))
 
-    def get_time(self) -> bytes:
-        return os.urandom(10) # I am the payload
+    def get_time(self) -> string:
+        # return os.urandom(10) # I am the payload
+        rand_string = ''.join(random.sample(population, 8500))
+        return rand_string.encode()
+
         #b'Hello world!'
         #(datetime.datetime.now() + self.time_offset).isoformat().encode("ascii")
 
