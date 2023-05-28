@@ -6,5 +6,5 @@
 ./receiver.py 192.168.10.33 6369 4660 1 1
 
 netstat -anu|sort -nk4 # to get the list of multicast addresses 
-OR
+#OR
 ip maddr 
